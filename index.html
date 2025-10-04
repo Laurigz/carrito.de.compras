@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laureano Gorosito | Tienda Online</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4; /* Fondo gris claro */
+        }
+        #cart-sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .main-image {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #cart-items::-webkit-scrollbar { width: 8px; }
+        #cart-items::-webkit-scrollbar-track { background: #e5e7eb; }
+        #cart-items::-webkit-scrollbar-thumb { background-color: #3b82f6; border-radius: 20px; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Barra Superior -->
+    <div class="bg-gray-800 text-white text-xs">
+        <div class="container mx-auto p-2 flex justify-between items-center">
+            <span>¡Envío gratis en compras superiores a $50.000!</span>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-blue-400 transition-colors">Ayuda</a>
+                <a href="#" class="hover:text-blue-400 transition-colors">Sucursales</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Encabezado Principal -->
+    <header class="bg-white p-4 shadow-md sticky top-0 z-40">
+        <div class="container mx-auto flex justify-between items-center gap-4">
+            <h1 class="text-3xl font-bold text-blue-600 whitespace-nowrap">Laureano G.</h1>
+            <div class="relative w-full max-w-xl hidden md:block">
+                <input type="text" id="search-bar" placeholder="Buscar productos, marcas y más..." class="w-full bg-gray-100 text-gray-800 placeholder-gray-500 border border-gray-300 rounded-full py-2.5 px-6 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                <svg class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#" class="text-center text-gray-700 hover:text-blue-600 transition relative hidden sm:block">
+                    <svg class="w-6 h-6 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+                    <div class="text-xs">Mi Cuenta</div>
+                </a>
+                <div id="cart-icon" class="relative cursor-pointer text-center text-gray-700 hover:text-blue-600 transition">
+                    <svg class="w-8 h-8 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 0 0-1.423-2.13H6.084a1.5 1.5 0 0 0-1.423 2.13L6.183 11.25H4.25a.75.75 0 0 0 0 1.5h1.5Z" /></svg>
+                    <span id="cart-count" class="absolute -top-1 -right-2 bg-blue-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Menú de Navegación -->
+    <nav class="bg-white shadow-sm">
+        <div id="category-filters" class="container mx-auto flex justify-center items-center gap-6 p-3">
+             <!-- Los botones de filtro se insertarán aquí -->
+        </div>
+    </nav>
+
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-4 md:p-8">
+        <!-- Hero Banner -->
+        <section class="mb-12">
+            <div class="bg-cover bg-center rounded-xl shadow-lg h-52 md:h-80" style="background-image: url('Produc-items/tec.avif');">
+                <div class="bg-black bg-opacity-40 rounded-xl h-full flex flex-col justify-center items-center text-white p-4">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-3">Tecnología para Vos</h2>
+                    <p class="text-lg mb-6">Hasta 40% OFF en productos seleccionados.</p>
+                    <a href="#" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition-transform hover:scale-105">Ver Ofertas</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catálogo de Productos -->
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Productos Destacados</h2>
+        <div id="product-catalog" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Skeleton loaders -->
+        </div>
+        
+        <!-- Banners Promocionales -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
+            <div class="bg-gray-800 rounded-xl shadow-lg p-8 text-white flex items-center bg-cover bg-right" style="background-image: url('Produc-items/sonido.avif');">
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded">
+                    <h3 class="text-3xl font-bold">Sonido Superior</h3>
+                    <p class="my-2">La mejor calidad de audio para tu música.</p>
+                    <a href="#" class="text-blue-400 font-semibold hover:underline">Descubrir Auriculares &rarr;</a>
+                </div>
+            </div>
+            <div class="bg-gray-200 rounded-xl shadow-lg p-8 text-gray-900 flex items-center bg-cover bg-right" style="background-image: url('https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=2070&auto=format&fit=crop');">
+                 <div class="bg-gray-200 bg-opacity-50 p-4 rounded">
+                    <h3 class="text-3xl font-bold">Hogar Inteligente</h3>
+                    <p class="my-2">Convertí tu casa en un espacio conectado.</p>
+                    <a href="#" class="text-blue-600 font-semibold hover:underline">Ver Dispositivos &rarr;</a>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Carrito (Sidebar) -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl transform translate-x-full z-50">
+        <div class="flex flex-col h-full">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-gray-800">Mi Carrito</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div id="cart-items" class="flex-grow p-4 overflow-y-auto bg-gray-50">
+                 <p id="empty-cart-message" class="text-gray-500 text-center mt-8">Tu carrito está vacío.</p>
+            </div>
+            <div class="p-4 border-t border-gray-200 bg-white">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold text-gray-800">Total:</span>
+                    <span id="cart-total" class="text-xl font-bold text-gray-900">$0.00</span>
+                </div>
+                <button id="checkout-button" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-60 z-40 hidden"></div>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300">
+        <div class="container mx-auto py-12 px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Laureano G.</h3>
+                    <p class="text-sm">Tu tienda de confianza para productos de tecnología, hogar y más. Calidad y servicio garantizados.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Atención al Cliente</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-blue-400">Preguntas Frecuentes</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Cómo Comprar</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Envíos y Entregas</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Cambios y Devoluciones</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Contacto</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>Email: ventas@laureanog.com</li>
+                        <li>WhatsApp: +54 9 11 1234-5678</li>
+                        <li>Dirección: Av. Siempre Viva 742</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Seguinos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.28C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"></path></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2.04C6.5,2.04 2,6.53 2,12.06C2,17.06 5.66,21.21 10.44,21.96V14.96H7.9V12.06H10.44V9.85C10.44,7.32 11.93,5.96 14.22,5.96C15.31,5.96 16.45,6.15 16.45,6.15V8.62H15.19C13.95,8.62 13.56,9.39 13.56,10.18V12.06H16.34L15.89,14.96H13.56V21.96A10,10 0 0,0 22,12.06C22,6.53 17.5,2.04 12,2.04Z"></path></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"></path></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
+                <p>&copy; 2025 Laureano Gorosito. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productCatalog = document.getElementById('product-catalog');
+            const cartIcon = document.getElementById('cart-icon');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            const overlay = document.getElementById('overlay');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const checkoutButton = document.getElementById('checkout-button');
+            const searchBar = document.getElementById('search-bar');
+            const categoryFiltersContainer = document.getElementById('category-filters');
+
+            let cart = [];
+
+            const products = [
+                { id: 1, name: 'iPhone 15 Pro', price: 1199.99, originalPrice: 1300, category: 'Tecnología', description: 'El último smartphone con chip A17 Bionic y cámara Pro.', images: ['Produc-Items/iphone3.webp', 'Produc-Items/iphone2.webp', 'Produc-Items/iphone.webp'] },
+                { id: 2, name: 'Sony WH-1000XM5', price: 349.50, originalPrice: 399.50, category: 'Tecnología', description: 'Auriculares con la mejor cancelación de ruido del mercado.', images: ['produc-items/sonya1.webp', 'produc-items/sonya2.webp', 'produc-items/sonya3.webp'] },
+                { id: 3, name: 'Apple Watch Series 9', price: 425.00, category: 'Tecnología', description: 'Tu compañero ideal para una vida saludable y conectada.', images: ['produc-items/applew1.webp', 'produc-items/applew2.webp', 'produc-items/applew3.webp'] },
+                { id: 4, name: 'MacBook Pro M3', price: 1899.99, category: 'Tecnología', description: 'Potencia y rendimiento extremo para profesionales.', images: ['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800&auto=format&fit=crop'] },
+                { id: 5, name: 'Campera Tech', price: 99.00, originalPrice: 120.00, category: 'Ropa', description: 'Resistente al agua y al viento, con estilo urbano.', images: ['produc-items/camp1.webp', 'produc-items/camp2.webp', 'produc-items/camp3.webp'] },
+                { id: 6, name: 'Zapatillas Runner', price: 95.75, category: 'Ropa', description: 'Comodidad y diseño para tus entrenamientos diarios.', images: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1597045566677-8cf032ed6634?q=80&w=800&auto=format&fit=crop'] },
+                { id: 7, name: 'Silla Ergonómica', price: 225.00, originalPrice: 250.00, category: 'Hogar', description: 'Cuida tu espalda con esta silla de oficina profesional.', images: ['https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=800&auto=format&fit=crop'] },
+                { id: 8, name: 'Cafetera Express', price: 155.00, category: 'Hogar', description: 'El café perfecto cada mañana sin salir de casa.', images: ['produc-items/caf1.webp', 'produc-items/caf2.webp', 'produc-items/caf3.webp'] },
+            ];
+
+            function renderProducts(filteredProducts = products) {
+                productCatalog.innerHTML = '';
+                if (filteredProducts.length === 0) {
+                    productCatalog.innerHTML = `<p class="col-span-full text-center text-gray-500">No se encontraron productos.</p>`;
+                    return;
+                }
+                filteredProducts.forEach(product => {
+                    const priceHTML = product.originalPrice 
+                        ? `<div class="flex items-baseline gap-2">
+                                <p class="text-2xl font-bold text-blue-600">$${product.price.toFixed(2)}</p>
+                                <p class="text-md text-gray-500 line-through">$${product.originalPrice.toFixed(2)}</p>
+                           </div>`
+                        : `<p class="text-2xl font-bold text-gray-900">$${product.price.toFixed(2)}</p>`;
+                    
+                    const thumbnailsHTML = product.images.map(imgSrc => `
+                        <img src="${imgSrc}" alt="Miniatura de ${product.name}" class="thumbnail-img w-10 h-10 object-cover rounded-md border-2 border-transparent cursor-pointer hover:border-blue-500 transition-all">
+                    `).join('');
+
+                    const productCard = `
+                        <div class="product-card bg-white rounded-lg shadow-md border border-gray-200 flex flex-col">
+                            <div class="relative group aspect-square rounded-t-lg overflow-hidden">
+                                <img src="${product.images[0]}" alt="${product.name}" class="main-image w-full h-full object-contain p-4 bg-white" onerror="this.src='https://placehold.co/600x600/e5e7eb/9ca3af?text=Error'">
+                                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-2 bg-black bg-opacity-25 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                                    ${thumbnailsHTML}
+                                </div>
+                            </div>
+                            <div class="p-4 flex flex-col flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900 truncate">${product.name}</h3>
+                                <p class="text-sm text-gray-600 my-2 flex-grow">${product.description}</p>
+                                <div class="mt-2 h-12">${priceHTML}</div>
+                                <button class="add-to-cart-btn w-full mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors" data-id="${product.id}">
+                                    Agregar al carrito
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    productCatalog.innerHTML += productCard;
+                });
+            }
+
+            function renderCategories() {
+                const categories = ['Todos', ...new Set(products.map(p => p.category))];
+                categoryFiltersContainer.innerHTML = categories.map(cat => `
+                    <button class="category-btn font-semibold text-gray-600 hover:text-blue-600 transition-colors py-1 px-3 rounded-full" data-category="${cat}">
+                        ${cat}
+                    </button>
+                `).join('');
+                const firstBtn = document.querySelector('.category-btn');
+                firstBtn.classList.add('bg-blue-100', 'text-blue-700');
+            }
+
+            function filterProducts() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const activeCategoryBtn = categoryFiltersContainer.querySelector('.bg-blue-100');
+                const activeCategory = activeCategoryBtn ? activeCategoryBtn.dataset.category : 'Todos';
+
+                const filtered = products.filter(p => {
+                    const matchesCategory = activeCategory === 'Todos' || p.category === activeCategory;
+                    const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm);
+                    return matchesCategory && matchesSearch;
+                });
+                renderProducts(filtered);
+            }
+
+            function showSkeletonLoaders() {
+                let skeletons = '';
+                for (let i = 0; i < 8; i++) {
+                    skeletons += `
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 animate-pulse">
+                            <div class="bg-gray-200 w-full aspect-square"></div>
+                            <div class="p-4">
+                                <div class="bg-gray-200 h-6 w-3/4 rounded-md mb-4"></div>
+                                <div class="bg-gray-200 h-8 w-1/2 rounded-md"></div>
+                                <div class="bg-gray-200 h-10 w-full rounded-lg mt-4"></div>
+                            </div>
+                        </div>`;
+                }
+                productCatalog.innerHTML = skeletons;
+            }
+
+            function addToCart(productId) {
+                const productInCart = cart.find(item => item.id === productId);
+                if (productInCart) {
+                    productInCart.quantity++;
+                } else {
+                    const productToAdd = products.find(p => p.id === productId);
+                    cart.push({ ...productToAdd, quantity: 1 });
+                }
+                updateCart();
+                openCart();
+            }
+
+            function updateCart() {
+                cartItemsContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    emptyCartMessage.classList.remove('hidden');
+                    checkoutButton.disabled = true;
+                } else {
+                    emptyCartMessage.classList.add('hidden');
+                    checkoutButton.disabled = false;
+                    cart.forEach(item => {
+                        const cartItem = `
+                            <div class="flex items-center justify-between mb-4 p-2 rounded-lg bg-white border">
+                                <img src="${item.images[0]}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md mr-4">
+                                <div class="flex-grow">
+                                    <h4 class="font-semibold text-sm text-gray-800">${item.name}</h4>
+                                    <p class="text-gray-600">$${item.price.toFixed(2)}</p>
+                                    <div class="flex items-center mt-1">
+                                        <button class="decrement-qty bg-gray-200 text-gray-700 rounded-full w-6 h-6 flex items-center justify-center font-bold hover:bg-gray-300" data-id="${item.id}">-</button>
+                                        <span class="mx-2 font-medium text-gray-800">${item.quantity}</span>
+                                        <button class="increment-qty bg-gray-200 text-gray-700 rounded-full w-6 h-6 flex items-center justify-center font-bold hover:bg-gray-300" data-id="${item.id}">+</button>
+                                    </div>
+                                </div>
+                                <button class="remove-from-cart-btn text-red-500 hover:text-red-700 ml-4" data-id="${item.id}">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                </button>
+                            </div>`;
+                        cartItemsContainer.innerHTML += cartItem;
+                    });
+                }
+                const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                cartCount.textContent = totalQuantity;
+                cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+            }
+
+            function removeFromCart(productId) { cart = cart.filter(item => item.id !== productId); updateCart(); }
+            function incrementQuantity(productId) { const item = cart.find(i => i.id === productId); if(item) { item.quantity++; updateCart(); } }
+            function decrementQuantity(productId) { const item = cart.find(i => i.id === productId); if (item && item.quantity > 1) { item.quantity--; updateCart(); } else if (item && item.quantity === 1) { removeFromCart(productId); } }
+            function openCart() { cartSidebar.classList.remove('translate-x-full'); overlay.classList.remove('hidden'); }
+            function closeCart() { cartSidebar.classList.add('translate-x-full'); overlay.classList.add('hidden'); }
+
+            searchBar.addEventListener('input', filterProducts);
+            categoryFiltersContainer.addEventListener('click', e => {
+                if(e.target.classList.contains('category-btn')) {
+                    categoryFiltersContainer.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('bg-blue-100', 'text-blue-700'));
+                    e.target.classList.add('bg-blue-100', 'text-blue-700');
+                    filterProducts();
+                }
+            });
+            productCatalog.addEventListener('click', e => { if (e.target.classList.contains('add-to-cart-btn')) addToCart(parseInt(e.target.dataset.id)); });
+            productCatalog.addEventListener('mouseover', e => {
+                if (e.target.classList.contains('thumbnail-img')) {
+                    const productCard = e.target.closest('.product-card');
+                    if (productCard) {
+                        const mainImage = productCard.querySelector('.main-image');
+                        if (mainImage && mainImage.src !== e.target.src) {
+                            mainImage.style.opacity = '0';
+                            setTimeout(() => { mainImage.src = e.target.src; mainImage.style.opacity = '1'; }, 150);
+                        }
+                    }
+                }
+            });
+            cartItemsContainer.addEventListener('click', e => {
+                const target = e.target.closest('button');
+                if (!target) return;
+                const id = parseInt(target.dataset.id);
+                if (target.classList.contains('remove-from-cart-btn')) removeFromCart(id);
+                else if (target.classList.contains('increment-qty')) incrementQuantity(id);
+                else if (target.classList.contains('decrement-qty')) decrementQuantity(id);
+            });
+            cartIcon.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            overlay.addEventListener('click', closeCart);
+            
+            checkoutButton.addEventListener('click', () => {
+                if (cart.length > 0) {
+                    alert('Serás redirigido a Mercado Pago para finalizar la compra.');
+                    window.location.href = 'https://www.mercadopago.com.ar/';
+                }
+            });
+
+            // --- INICIALIZACIÓN ---
+            showSkeletonLoaders();
+            setTimeout(() => {
+                renderCategories();
+                filterProducts();
+                updateCart();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+
